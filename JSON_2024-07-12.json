@@ -1,0 +1,2963 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "1.0.0",
+    "title": "common-refData",
+    "contact": {
+      "name": "Fábio Dias",
+      "email": "fabio.b.dias@parceiros.nos.pt"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api-it-dev.apg.corporativo.pt",
+      "description": "Endpoint for development (dev - internal) environment"
+    },
+    {
+      "url": "https://api-it-integration-dev.nos.pt",
+      "description": "Endpoint for development (dev) environment"
+    },
+    {
+      "url": "https://api-it-tui.apg.corporativo.pt",
+      "description": "Endpoint for integrated tests (tui - internal) environment"
+    },
+    {
+      "url": "https://api-it-integration-tui.nos.pt",
+      "description": "Endpoint for integrated tests (tui) environment"
+    },
+    {
+      "url": "https://api-it-qms.apg.corporativo.pt",
+      "description": "Endpoint for quality and test (qms - internal) environment"
+    },
+    {
+      "url": "https://api-it-integration-qms.nos.pt",
+      "description": "Endpoint for quality and test (qms) environment"
+    },
+    {
+      "url": "https://api-it.apg.corporativo.pt",
+      "description": "Endpoint for production (prd - internal) environment"
+    },
+    {
+      "url": "https://api-it-integration.nos.pt",
+      "description": "Endpoint for production (prd) environment"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/common/v1/refData": {
+      "get": {
+        "tags": [
+          "Reference Data",
+          "V1"
+        ],
+        "summary": "This is a specific service retrieves ref data.",
+        "deprecated": "true",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-originalApplication",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-process",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-user",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-eTrackingID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-iTrackingID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-timeout",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-OP-return-parameters",
+            "schema": {
+              "type": "string",
+              "default": "TRUE"
+            },
+            "description": "Return Parameters Structure (REF_DATA_PARAMETER) if Parameter value is True\nParameter value = 'TRUE|FALSE'\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-return-status",
+            "schema": {
+              "type": "string",
+              "default": "ACTIVE"
+            },
+            "description": "Return LOVs only in ACTIVE|INACTIVE or both STATUS \nParameter value = 'ACTIVE|INACTIVE|ALL' \n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-total-count",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Return number of LOVs per page \nParameter value = Number of LOVs per page\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-start-position",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Return LOVs ID after first LOV ID \nParameter value = '' – First LOV ID in page\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-order-by-value",
+            "schema": {
+              "type": "string",
+              "default": "ASC"
+            },
+            "description": "Return LOVs order by LOV Value  \nParameter value = 'ASC|DESC' \n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-order-by-status",
+            "schema": {
+              "type": "string",
+              "default": "ACTIVE"
+            },
+            "description": "Return LOVs order by Status  \nParameter value = ' ACTIVE|INACTIVE ' \n"
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "RefData ID"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "RefData Name"
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Refdata Data Type",
+            "example": "CONTACTS_OUTDATE_THRESHOLD"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-iTrackingID": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Internal service identifier for order execution",
+                "required": "true"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefDataResponse"
+                },
+                "examples": {
+                  "Get Ref Data Example Response": {
+                    "schema": null,
+                    "$ref": "#/components/examples/GetRefDataResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP409Response"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Error"
+          },
+          "502": {
+            "description": "Bad Gateway"
+          },
+          "504": {
+            "description": "Timeout"
+          }
+        }
+      }
+    },
+    "/common/v1/refData/search": {
+      "post": {
+        "tags": [
+          "Reference Data",
+          "V1"
+        ],
+        "summary": "This is a specific service retrieves ref data.",
+        "deprecated": "true",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-originalApplication",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-process",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-user",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-eTrackingID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-iTrackingID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-timeout",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-OP-return-parameters",
+            "schema": {
+              "type": "string",
+              "default": "TRUE"
+            },
+            "description": "Return Parameters Structure (REF_DATA_PARAMETER) if Parameter value is True\nParameter value = 'TRUE|FALSE'\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-return-status",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Return LOVs only in ACTIVE|INACTIVE or both STATUS\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-total-count",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Return number of LOVs per page"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-order-by-value",
+            "schema": {
+              "type": "string",
+              "default": "ASC"
+            },
+            "description": "Return LOVs order by LOV Value \nParameter value = 'ASC|DESC'\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-order-by-status",
+            "schema": {
+              "type": "string",
+              "default": "ACTIVE"
+            },
+            "description": "Return LOVs order by Status \nParameter value = ' ACTIVE|INACTIVE' \n"
+          }
+        ],
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRefDataRequest"
+              },
+              "examples": {
+                "Search RefData Example Request": {
+                  "schema": null,
+                  "$ref": "#/components/examples/SearchRefDataRequestExample"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-iTrackingID": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Internal service identifier for order execution",
+                "required": "true"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchRefDataResponse"
+                },
+                "examples": {
+                  "Search Ref Data Example Response": {
+                    "schema": null,
+                    "$ref": "#/components/examples/SearchRefDataResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP409Response"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Error"
+          },
+          "502": {
+            "description": "Bad Gateway"
+          },
+          "504": {
+            "description": "Timeout"
+          }
+        }
+      }
+    },
+    "/common/v1/refData/billing/search": {
+      "post": {
+        "tags": [
+          "Reference Data",
+          "V1"
+        ],
+        "summary": "This is a specific service that retrieves billing LOV.",
+        "deprecated": "true",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-originalApplication",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-process",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-user",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-eTrackingID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-iTrackingID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-timeout",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-OP-source-system",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchLOVBillingRequest"
+              },
+              "examples": {
+                "Search Billing Ref Data Example Request": {
+                  "schema": null,
+                  "$ref": "#/components/examples/SearchLOVBillingRequestExample"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-iTrackingID": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Internal service identifier for order execution",
+                "required": "true"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchLOVBillingResponse"
+                },
+                "examples": {
+                  "Search Billing Ref Data Example Response": {
+                    "schema": null,
+                    "$ref": "#/components/examples/SearchLOVBillingResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP409Response"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Error"
+          },
+          "502": {
+            "description": "Bad Gateway"
+          },
+          "504": {
+            "description": "Timeout"
+          }
+        }
+      }
+    },
+    "/common/v2/refData": {
+      "get": {
+        "tags": [
+          "Reference Data",
+          "v2"
+        ],
+        "summary": "This is a specific service retrieves ref data.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-originalApplication",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-application",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-process",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-user",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-eTrackingID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-iTrackingID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-timeout",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-OP-return-parameters",
+            "schema": {
+              "type": "string",
+              "default": "TRUE"
+            },
+            "description": "Return Parameters Structure (REF_DATA_PARAMETER) if Parameter value is True\nParameter value = 'TRUE|FALSE'\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-return-status",
+            "schema": {
+              "type": "string",
+              "default": "ACTIVE"
+            },
+            "description": "Return LOVs only in ACTIVE|INACTIVE or both STATUS \nParameter value = 'ACTIVE|INACTIVE|ALL' \n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-total-count",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Return number of LOVs per page \nParameter value = Number of LOVs per page\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-start-position",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Return LOVs ID after first LOV ID \nParameter value = '' – First LOV ID in page\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-order-by-value",
+            "schema": {
+              "type": "string",
+              "default": "ASC"
+            },
+            "description": "Return LOVs order by LOV Value  \nParameter value = 'ASC|DESC' \n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-order-by-status",
+            "schema": {
+              "type": "string",
+              "default": "ACTIVE"
+            },
+            "description": "Return LOVs order by Status  \nParameter value = ' ACTIVE|INACTIVE ' \n"
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "RefData ID"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "RefData Name"
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Refdata Data Type",
+            "example": "CONTACTS_OUTDATE_THRESHOLD"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-iTrackingID": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Internal service identifier for order execution",
+                "required": "true"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefDataResponse"
+                },
+                "examples": {
+                  "Get Ref Data Example Response": {
+                    "schema": null,
+                    "$ref": "#/components/examples/GetRefDataResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Partial Content",
+            "headers": {
+              "X-iTrackingID": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Internal service identifier for order execution",
+                "required": "true"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefDataResponse"
+                },
+                "examples": {
+                  "Get Ref Data Example Response": {
+                    "schema": null,
+                    "$ref": "#/components/examples/GetRefDataResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-409"
+                }
+              }
+            }
+          },
+          "423": {
+            "description": "Locked"
+          },
+          "429": {
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-500"
+                },
+                "examples": {
+                  "Internal Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-500-internal"
+                  },
+                  "Access Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-500-access"
+                  }
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Bad Gateway",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-502"
+                },
+                "examples": {
+                  "Technical Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-technical"
+                  },
+                  "Functional Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-functional"
+                  },
+                  "Communication Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-communication"
+                  }
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway Timeout"
+          }
+        }
+      }
+    },
+    "/common/v2/refData/search": {
+      "post": {
+        "tags": [
+          "Reference Data",
+          "v2"
+        ],
+        "summary": "This is a specific service retrieves ref data.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-originalApplication",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-application",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-process",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-user",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-eTrackingID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-iTrackingID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-timeout",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-OP-return-parameters",
+            "schema": {
+              "type": "string",
+              "default": "TRUE"
+            },
+            "description": "Return Parameters Structure (REF_DATA_PARAMETER) if Parameter value is True\nParameter value = 'TRUE|FALSE'\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-return-status",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Return LOVs only in ACTIVE|INACTIVE or both STATUS\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-total-count",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Return number of LOVs per page"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-order-by-value",
+            "schema": {
+              "type": "string",
+              "default": "ASC"
+            },
+            "description": "Return LOVs order by LOV Value \nParameter value = 'ASC|DESC'\n"
+          },
+          {
+            "in": "header",
+            "name": "X-OP-order-by-status",
+            "schema": {
+              "type": "string",
+              "default": "ACTIVE"
+            },
+            "description": "Return LOVs order by Status \nParameter value = ' ACTIVE|INACTIVE' \n"
+          }
+        ],
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRefDataRequest"
+              },
+              "examples": {
+                "Search RefData Example Request": {
+                  "schema": null,
+                  "$ref": "#/components/examples/SearchRefDataRequestExample"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-iTrackingID": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Internal service identifier for order execution",
+                "required": "true"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchRefDataResponse"
+                },
+                "examples": {
+                  "Search Ref Data Example Response": {
+                    "schema": null,
+                    "$ref": "#/components/examples/SearchRefDataResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Partial Content",
+            "headers": {
+              "X-iTrackingID": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Internal service identifier for order execution",
+                "required": "true"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchRefDataResponse"
+                },
+                "examples": {
+                  "Search Ref Data Example Response": {
+                    "schema": null,
+                    "$ref": "#/components/examples/SearchRefDataResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-409"
+                }
+              }
+            }
+          },
+          "423": {
+            "description": "Locked"
+          },
+          "429": {
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-500"
+                },
+                "examples": {
+                  "Internal Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-500-internal"
+                  },
+                  "Access Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-500-access"
+                  }
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Bad Gateway",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-502"
+                },
+                "examples": {
+                  "Technical Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-technical"
+                  },
+                  "Functional Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-functional"
+                  },
+                  "Communication Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-communication"
+                  }
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway Timeout"
+          }
+        }
+      }
+    },
+    "/common/v2/refData/billing/search": {
+      "post": {
+        "tags": [
+          "Reference Data",
+          "v2"
+        ],
+        "summary": "This is a specific service that retrieves billing LOV.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-originalApplication",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-application",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-process",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-user",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-eTrackingID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-iTrackingID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-timeout",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-OP-source-system",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchLOVBillingRequest"
+              },
+              "examples": {
+                "Search Billing Ref Data Example Request": {
+                  "schema": null,
+                  "$ref": "#/components/examples/SearchLOVBillingRequestExample"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-iTrackingID": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Internal service identifier for order execution",
+                "required": "true"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchLOVBillingResponse"
+                },
+                "examples": {
+                  "Search Billing Ref Data Example Response": {
+                    "schema": null,
+                    "$ref": "#/components/examples/SearchLOVBillingResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Partial Content",
+            "headers": {
+              "X-iTrackingID": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Internal service identifier for order execution",
+                "required": "true"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchLOVBillingResponse"
+                },
+                "examples": {
+                  "Search Billing Ref Data Example Response": {
+                    "schema": null,
+                    "$ref": "#/components/examples/SearchLOVBillingResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-409"
+                }
+              }
+            }
+          },
+          "423": {
+            "description": "Locked"
+          },
+          "429": {
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-500"
+                },
+                "examples": {
+                  "Internal Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-500-internal"
+                  },
+                  "Access Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-500-access"
+                  }
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Bad Gateway",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-502"
+                },
+                "examples": {
+                  "Technical Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-technical"
+                  },
+                  "Functional Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-functional"
+                  },
+                  "Communication Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-communication"
+                  }
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway Timeout"
+          }
+        }
+      }
+    },
+    "/common/v2/refData/knowledge/search": {
+      "post": {
+        "tags": [
+          "Reference Data",
+          "v2"
+        ],
+        "summary": "Retrieves the information for all of the deployments that match the specified query.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-originalApplication",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Client application unique identifier"
+          },
+          {
+            "in": "header",
+            "name": "X-application",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Client application unique identifier",
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-process",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Process unique identifier",
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-user",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Client/Submitter user unique identifier"
+          },
+          {
+            "in": "header",
+            "name": "X-eTrackingID",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier to identify this request. For client usage",
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "X-iTrackingID",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Internal request identifier"
+          },
+          {
+            "in": "header",
+            "name": "X-timeout",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Request Timeout value"
+          }
+        ],
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeSearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "X-iTrackingID": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Internal service identifier for order execution",
+                "required": "true"
+              },
+              "X-timeout": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request timeout value"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeSearchResponse"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Partial Content",
+            "headers": {
+              "X-iTrackingID": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Internal service identifier for order execution",
+                "required": "true"
+              },
+              "X-timeout": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Request timeout value"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeSearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-409"
+                }
+              }
+            }
+          },
+          "423": {
+            "description": "Locked"
+          },
+          "429": {
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-500"
+                },
+                "examples": {
+                  "Internal Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-500-internal"
+                  },
+                  "Access Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-500-access"
+                  }
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Bad Gateway",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTP-Client-Error-Response-502"
+                },
+                "examples": {
+                  "Technical Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-technical"
+                  },
+                  "Functional Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-functional"
+                  },
+                  "Communication Error": {
+                    "schema": null,
+                    "$ref": "#/components/examples/HTTP-Client-Error-Response-502-communication"
+                  }
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway Timeout"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "KnowledgeSearchRequest": {
+        "type": "object",
+        "properties": {
+          "cursor": {
+            "type": "string"
+          },
+          "query": {
+            "type": "object",
+            "properties": {
+              "match_all": {
+                "type": "object"
+              }
+            }
+          },
+          "simple_query_string": {
+            "type": "object",
+            "properties": {
+              "fuzzy_max_expansions": {
+                "type": "integer"
+              },
+              "fields": {
+                "type": "string"
+              },
+              "fuzzy_prefix_length": {
+                "type": "integer"
+              },
+              "analyzer": {
+                "type": "string"
+              },
+              "fuzzy_transpositions": {
+                "type": "boolean"
+              },
+              "auto_generate_synonyms_phrase_query": {
+                "type": "boolean"
+              },
+              "default_operator": {
+                "type": "string"
+              },
+              "flags": {
+                "type": "string"
+              },
+              "analyze_wildcard": {
+                "type": "boolean"
+              },
+              "minimum_should_match": {
+                "type": "string"
+              },
+              "query": {
+                "type": "string"
+              },
+              "lenient": {
+                "type": "boolean"
+              },
+              "quote_field_suffix": {
+                "type": "string"
+              }
+            }
+          },
+          "exists": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string"
+              }
+            }
+          },
+          "term": {
+            "type": "object",
+            "properties": {
+              "additionalProp1": {
+                "type": "string"
+              },
+              "additionalProp2": {
+                "type": "string"
+              },
+              "additionalProp3": {
+                "type": "string"
+              }
+            }
+          },
+          "nested": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string"
+              },
+              "score_mode": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              }
+            }
+          },
+          "prefix": {
+            "type": "object",
+            "properties": {
+              "additionalProp1": {
+                "type": "string"
+              },
+              "additionalProp2": {
+                "type": "string"
+              },
+              "additionalProp3": {
+                "type": "string"
+              }
+            }
+          },
+          "bool": {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "minimum_should_match": {
+                "type": "integer"
+              },
+              "should": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "must_not": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "must": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "query_string": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string"
+              },
+              "default_operator": {
+                "type": "string"
+              },
+              "default_field": {
+                "type": "string"
+              },
+              "allow_leading_wildcard": {
+                "type": "boolean"
+              },
+              "analyzer": {
+                "type": "string"
+              }
+            }
+          },
+          "range": {
+            "type": "object",
+            "properties": {
+              "additionalProp1": {
+                "type": "object",
+                "properties": {
+                  "gt": {
+                    "type": "object"
+                  },
+                  "gte": {
+                    "type": "object"
+                  },
+                  "format": {
+                    "type": "string"
+                  },
+                  "time_zone": {
+                    "type": "string"
+                  },
+                  "lt": {
+                    "type": "object"
+                  },
+                  "lte": {
+                    "type": "object"
+                  },
+                  "boost": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "additionalProp2": {
+                "type": "object",
+                "properties": {
+                  "gt": {
+                    "type": "object"
+                  },
+                  "gte": {
+                    "type": "object"
+                  },
+                  "format": {
+                    "type": "string"
+                  },
+                  "time_zone": {
+                    "type": "string"
+                  },
+                  "lt": {
+                    "type": "object"
+                  },
+                  "lte": {
+                    "type": "object"
+                  },
+                  "boost": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "additionalProp3": {
+                "type": "object",
+                "properties": {
+                  "gt": {
+                    "type": "object"
+                  },
+                  "gte": {
+                    "type": "object"
+                  },
+                  "format": {
+                    "type": "string"
+                  },
+                  "time_zone": {
+                    "type": "string"
+                  },
+                  "lt": {
+                    "type": "object"
+                  },
+                  "lte": {
+                    "type": "object"
+                  },
+                  "boost": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "match_none": {
+            "type": "object"
+          },
+          "match": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "operator": {
+                  "type": "string"
+                },
+                "query": {
+                  "type": "string"
+                },
+                "minimum_should_match": {
+                  "type": "integer"
+                },
+                "analyzer": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "from": {
+            "type": "integer"
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "size": {
+            "type": "integer"
+          }
+        }
+      },
+      "HTTP409Response": {
+        "type": "object",
+        "properties": {
+          "eNative": {
+            "type": "array",
+            "description": "This is a complex type that contains the native error codes and the SOA error codes.",
+            "items": {
+              "type": "object",
+              "description": "Contains the error code/error description, of the target system, as described in the “Functional Errors - COM-997” section in this document.",
+              "properties": {
+                "eCode": {
+                  "type": "string",
+                  "description": "Target system return code."
+                },
+                "eDescription": {
+                  "type": "string",
+                  "description": "Target system return description."
+                },
+                "eSystem": {
+                  "type": "string",
+                  "description": "Target system name."
+                }
+              }
+            }
+          }
+        }
+      },
+      "RefDataResponse": {
+        "type": "object",
+        "properties": {
+          "LOVs": {
+            "type": "object",
+            "properties": {
+              "Count": {
+                "type": "string"
+              },
+              "LOV": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RefDataLOVResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RefDataLOVResponse": {
+        "type": "object",
+        "properties": {
+          "Description": {
+            "type": "string"
+          },
+          "ID": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "string",
+            "description": "LOV Parameter Status\n1 - Active\n0 - Inactive\n* - ALL\n"
+          },
+          "Type": {
+            "type": "string"
+          },
+          "TypeID": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "string"
+          },
+          "Application": {
+            "type": "object",
+            "properties": {
+              "ApplicationID": {
+                "type": "string"
+              },
+              "Name": {
+                "type": "string"
+              }
+            }
+          },
+          "Parameters": {
+            "type": "object",
+            "properties": {
+              "Parameter": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RefDataLOVParameterResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RefDataLOVParameterResponse": {
+        "type": "object",
+        "properties": {
+          "Description": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "ParameterID": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "string",
+            "description": "LOV Parameter Status\n1 - Active\n0 - Inactive\n* - ALL\n"
+          },
+          "Type": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "string"
+          }
+        }
+      },
+      "SearchRefDataRequest": {
+        "type": "object",
+        "properties": {
+          "LOV": {
+            "type": "object",
+            "properties": {
+              "MappingID": {
+                "type": "string",
+                "description": "RefData ID"
+              },
+              "Type": {
+                "type": "string",
+                "description": "Refdata Data Type"
+              },
+              "TypeID": {
+                "type": "string",
+                "description": "RefData Type ID"
+              },
+              "LOVs": {
+                "type": "object",
+                "properties": {
+                  "LOV": {
+                    "type": "array",
+                    "items": {
+                      "properties": {
+                        "ID": {
+                          "type": "string",
+                          "description": "Parameter ID"
+                        },
+                        "Name": {
+                          "type": "string",
+                          "description": "Parameter Name"
+                        },
+                        "Type": {
+                          "type": "string",
+                          "description": "Parameter Type"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SearchRefDataResponse": {
+        "type": "object",
+        "properties": {
+          "LOVs": {
+            "type": "object",
+            "properties": {
+              "Count": {
+                "type": "string"
+              },
+              "LOV": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "IsMapping": {
+                      "type": "string",
+                      "description": "Have Mapping \n“1 - True”;\n”0 - False”\n"
+                    },
+                    "MappingID": {
+                      "type": "string",
+                      "description": "LOV Mapping ID\nIsMapping = “True”\n"
+                    },
+                    "Status": {
+                      "type": "string"
+                    },
+                    "Type": {
+                      "type": "string",
+                      "description": "LOV RefData Type"
+                    },
+                    "TypeID": {
+                      "type": "string"
+                    },
+                    "LOVs": {
+                      "type": "object",
+                      "properties": {
+                        "LOV": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "ID": {
+                                "type": "string",
+                                "description": "LOV ID RefData"
+                              },
+                              "Name": {
+                                "type": "string",
+                                "description": "LOV Data Type Name"
+                              },
+                              "Status": {
+                                "type": "string"
+                              },
+                              "Type": {
+                                "type": "string",
+                                "description": "LOV Type"
+                              },
+                              "TypeID": {
+                                "type": "string",
+                                "description": "LOV Type ID"
+                              },
+                              "Value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Parameters": {
+                      "type": "object",
+                      "properties": {
+                        "Parameter": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "Name": {
+                                "type": "string",
+                                "description": "Parameter RefData  Name"
+                              },
+                              "Type": {
+                                "type": "string",
+                                "description": "Parameter RefData  Type"
+                              },
+                              "Value": {
+                                "type": "string",
+                                "description": "Parameter RefData  Value"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SearchLOVBillingRequest": {
+        "type": "object",
+        "properties": {
+          "LOV": {
+            "type": "object",
+            "properties": {
+              "Type": {
+                "type": "string",
+                "description": "LOV Type: \n'BANK_FROM_IBAN' | 'CMPL_REASON' | 'OCC_TYPOLOGY' | 'OCC_SERVICE' | 'NO_CHARGE_REASONS' | 'CREDIT_NOTE_REASONS' | 'INVOICE_COST' | 'GROUP_LEVEL_OCC' | 'BILLING_REASONS'\n"
+              }
+            }
+          },
+          "Parameters": {
+            "type": "object",
+            "properties": {
+              "Parameter": {
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "Name": {
+                      "type": "string",
+                      "description": "Parameter Name: \n'IBAN' | 'TYPE' | 'CUSTCODE' | 'CUSTCODE'  + 'SPCODE' | 'PRGCODE' | 'CUSTCODE' + SNCODE'\n"
+                    },
+                    "Value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SearchLOVBillingResponse": {
+        "type": "object",
+        "properties": {
+          "LOVS": {
+            "type": "object",
+            "properties": {
+              "LOVs": {
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "ID": {
+                      "type": "string"
+                    },
+                    "LOV": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "Description": {
+                            "type": "string"
+                          },
+                          "ID": {
+                            "type": "string"
+                          },
+                          "Name": {
+                            "type": "string"
+                          },
+                          "Type": {
+                            "type": "string"
+                          },
+                          "Value": {
+                            "type": "string"
+                          },
+                          "Parameters": {
+                            "type": "object",
+                            "properties": {
+                              "Parameter": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "Name": {
+                                      "type": "string"
+                                    },
+                                    "Value": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Parameters": {
+                      "type": "object",
+                      "properties": {
+                        "Parameter": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "Name": {
+                                "type": "string"
+                              },
+                              "Value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "KnowledgeSearchResponse": {
+        "required": [
+          "deployments",
+          "return_count"
+        ],
+        "type": "object",
+        "properties": {
+          "match_count": {
+            "type": "integer",
+            "description": "If a query is supplied, then the total number of deployments that matched\n",
+            "format": "int32"
+          },
+          "cursor": {
+            "type": "string",
+            "description": "To retrieve the next batch of deployments from this search, specify this value in the cursor field of the next search request. For paginated searches, it is recommended to sort on a static and unique field, like deployment or cluster id. A static and unique sort avoids concurrent updates causing a deployment to move across pages and becoming a duplicate or lost entry. The default sort of rank and modified date is often good for getting a particular deployment into the first page, but if a not yet seen deployment is modified in between page requests, then it would be left out from the next page.\n"
+          },
+          "return_count": {
+            "type": "integer",
+            "description": "The number of deployments actually returned, either as deployment instances or as minimalMetadata objects\n",
+            "format": "int32"
+          },
+          "minimal_metadata": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "An array of minimal metadata objects (if returned)\n"
+          },
+          "deployments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeploymentSearchResponse"
+            },
+            "description": "An array of DeploymentSearchResponse objects representing the deployments matching the search criteria\n"
+          }
+        },
+        "description": "Contains a list of Deployments as a result of a search request.\n"
+      },
+      "HTTP-Success-Response-202": {
+        "type": "object",
+        "properties": {
+          "Status": {
+            "type": "object",
+            "properties": {
+              "Code": {
+                "type": "string"
+              },
+              "Message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "HTTP-Client-Error-Response-409": {
+        "type": "object",
+        "properties": {
+          "Status": {
+            "type": "object",
+            "properties": {
+              "Code": {
+                "type": "string"
+              },
+              "Message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "HTTP-Client-Error-Response-500": {
+        "type": "object",
+        "properties": {
+          "Status": {
+            "type": "object",
+            "properties": {
+              "Code": {
+                "type": "string"
+              },
+              "Message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "HTTP-Client-Error-Response-502": {
+        "type": "object",
+        "properties": {
+          "Status": {
+            "type": "object",
+            "properties": {
+              "Code": {
+                "type": "string"
+              },
+              "Message": {
+                "type": "string"
+              },
+              "FunctionalStatus": {
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "Message": {
+                      "type": "string"
+                    },
+                    "Code": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "DeploymentSearchResponse": {
+        "required": [
+          "healthy",
+          "id",
+          "name",
+          "resources"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of this deployment"
+          },
+          "settings": {
+            "description": "Additional configuration for this Deployment",
+            "$ref": "#/components/schemas/DeploymentSettings"
+          },
+          "healthy": {
+            "type": "boolean",
+            "description": "Whether the deployment is overall healthy or not (one or more of the resource info subsections will have healthy: false)\n"
+          },
+          "alias": {
+            "type": "string",
+            "description": "A user-defined deployment alias for user-friendly resource URLs"
+          },
+          "id": {
+            "type": "string",
+            "description": "A randomly-generated id of this Deployment"
+          },
+          "resources": {
+            "description": "The Resources that belong to this Deployment",
+            "$ref": "#/components/schemas/DeploymentResources"
+          },
+          "metadata": {
+            "description": "Additional information about this deployment",
+            "$ref": "#/components/schemas/DeploymentMetadata"
+          }
+        },
+        "description": "Describes a searched Deployment"
+      },
+      "DeploymentSettings": {
+        "required": [
+          "auto_ops"
+        ],
+        "type": "object",
+        "properties": {
+          "autoscaling_enabled": {
+            "type": "boolean",
+            "description": "If autoscaling is enabled for this deployment."
+          },
+          "observability": {
+            "description": "Logging and monitoring settings for this deployment.",
+            "$ref": "#/components/schemas/DeploymentObservabilitySettings"
+          },
+          "traffic_filter_settings": {
+            "description": "The traffic filter rulesets for this deployment.",
+            "$ref": "#/components/schemas/TrafficFilterSettings"
+          },
+          "auto_ops": {
+            "description": "See AutoOps integration status for this deployment.",
+            "$ref": "#/components/schemas/AutoOpsSettings"
+          }
+        },
+        "description": "Additional configuration about the current deployment object."
+      },
+      "DeploymentResources": {
+        "required": [
+          "apm",
+          "appsearch",
+          "elasticsearch",
+          "enterprise_search",
+          "integrations_server",
+          "kibana"
+        ],
+        "type": "object",
+        "properties": {
+          "enterprise_search": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EnterpriseSearchResourceInfo"
+            },
+            "description": "List of Enterprise Search resources in your Deployment"
+          },
+          "kibana": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KibanaResourceInfo"
+            },
+            "description": "List of Kibana resources in your Deployment"
+          },
+          "elasticsearch": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ElasticsearchResourceInfo"
+            },
+            "description": "List of Elasticsearch resources in your Deployment"
+          },
+          "apm": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApmResourceInfo"
+            },
+            "description": "List of Apm resources in your Deployment"
+          },
+          "appsearch": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppSearchResourceInfo"
+            },
+            "description": "List of App Search resources in your Deployment"
+          },
+          "integrations_server": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IntegrationsServerResourceInfo"
+            },
+            "description": "List of Integrations Server resources in your Deployment"
+          }
+        },
+        "description": "Describes a resource belonging to a Deployment"
+      },
+      "DeploymentMetadata": {
+        "type": "object",
+        "properties": {
+          "byok_enabled": {
+            "type": "boolean",
+            "readOnly": "true",
+            "description": "Indicates if the Deployment is BYOK enabled or not"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetadataItem"
+            },
+            "description": "Arbitrary user-defined metadata associated with this deployment"
+          }
+        },
+        "description": "Additional information about the current deployment object."
+      },
+      "DeploymentObservabilitySettings": {
+        "type": "object",
+        "properties": {
+          "metrics": {
+            "description": "The metrics settings for the deployment",
+            "$ref": "#/components/schemas/DeploymentMetricsSettings"
+          },
+          "logging": {
+            "description": "The logging settings for the deployment",
+            "$ref": "#/components/schemas/DeploymentLoggingSettings"
+          }
+        },
+        "description": "The observability settings for a deployment"
+      },
+      "TrafficFilterSettings": {
+        "required": [
+          "rulesets"
+        ],
+        "type": "object",
+        "properties": {
+          "rulesets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "IDs of the traffic filter rulesets"
+          }
+        },
+        "description": "The configuration settings for the traffic filter."
+      },
+      "AutoOpsSettings": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "connected",
+              "not_connected",
+              "excluded"
+            ],
+            "description": "See AutoOps integration status for this deployment."
+          }
+        },
+        "description": "AutoOps settings for this deployment."
+      },
+      "EnterpriseSearchResourceInfo": {
+        "required": [
+          "elasticsearch_cluster_ref_id",
+          "id",
+          "info",
+          "ref_id",
+          "region"
+        ],
+        "type": "object",
+        "properties": {
+          "elasticsearch_cluster_ref_id": {
+            "type": "string",
+            "description": "The Elasticsearch cluster that this resource depends on."
+          },
+          "info": {
+            "description": "Info for the resource."
+          },
+          "region": {
+            "type": "string",
+            "description": "The region where this resource exists"
+          },
+          "id": {
+            "type": "string",
+            "description": "The randomly-generated id of a Resource"
+          },
+          "ref_id": {
+            "type": "string",
+            "description": "The locally-unique user-specified id of a Resource"
+          }
+        },
+        "description": "Describes an Enterprise Search resource belonging to a Deployment"
+      },
+      "KibanaResourceInfo": {
+        "required": [
+          "elasticsearch_cluster_ref_id",
+          "id",
+          "info",
+          "ref_id",
+          "region"
+        ],
+        "type": "object",
+        "properties": {
+          "elasticsearch_cluster_ref_id": {
+            "type": "string",
+            "description": "The Elasticsearch cluster that this resource depends on."
+          },
+          "info": {
+            "description": "Info for the resource."
+          },
+          "region": {
+            "type": "string",
+            "description": "The region where this resource exists"
+          },
+          "id": {
+            "type": "string",
+            "description": "The randomly-generated id of a Resource"
+          },
+          "ref_id": {
+            "type": "string",
+            "description": "The locally-unique user-specified id of a Resource"
+          }
+        },
+        "description": "Describes a Kibana resource belonging to a Deployment"
+      },
+      "ElasticsearchResourceInfo": {
+        "required": [
+          "id",
+          "info",
+          "ref_id",
+          "region"
+        ],
+        "type": "object",
+        "properties": {
+          "info": {
+            "description": "Info for the resource."
+          },
+          "region": {
+            "type": "string",
+            "description": "The region where this resource exists"
+          },
+          "id": {
+            "type": "string",
+            "description": "The randomly-generated id of a Resource"
+          },
+          "ref_id": {
+            "type": "string",
+            "description": "The locally-unique user-specified id of a Resource"
+          }
+        },
+        "description": "Describes an Elasticsearch resource belonging to a Deployment"
+      },
+      "ApmResourceInfo": {
+        "required": [
+          "elasticsearch_cluster_ref_id",
+          "id",
+          "info",
+          "ref_id",
+          "region"
+        ],
+        "type": "object",
+        "properties": {
+          "elasticsearch_cluster_ref_id": {
+            "type": "string",
+            "description": "The Elasticsearch cluster that this resource depends on."
+          },
+          "info": {
+            "description": "Info for the resource."
+          },
+          "region": {
+            "type": "string",
+            "description": "The region where this resource exists"
+          },
+          "id": {
+            "type": "string",
+            "description": "The randomly-generated id of a Resource"
+          },
+          "ref_id": {
+            "type": "string",
+            "description": "The locally-unique user-specified id of a Resource"
+          }
+        }
+      },
+      "AppSearchResourceInfo": {
+        "required": [
+          "elasticsearch_cluster_ref_id",
+          "id",
+          "info",
+          "ref_id",
+          "region"
+        ],
+        "type": "object",
+        "properties": {
+          "elasticsearch_cluster_ref_id": {
+            "type": "string",
+            "description": "The Elasticsearch cluster that this resource depends on."
+          },
+          "info": {
+            "description": "Info for the resource."
+          },
+          "region": {
+            "type": "string",
+            "description": "The region where this resource exists"
+          },
+          "id": {
+            "type": "string",
+            "description": "The randomly-generated id of a Resource"
+          },
+          "ref_id": {
+            "type": "string",
+            "description": "The locally-unique user-specified id of a Resource"
+          }
+        }
+      },
+      "IntegrationsServerResourceInfo": {
+        "required": [
+          "elasticsearch_cluster_ref_id",
+          "id",
+          "info",
+          "ref_id",
+          "region"
+        ],
+        "type": "object",
+        "properties": {
+          "elasticsearch_cluster_ref_id": {
+            "type": "string",
+            "description": "The Elasticsearch cluster that this resource depends on."
+          },
+          "info": {
+            "description": "Info for the resource."
+          },
+          "region": {
+            "type": "string",
+            "description": "The region where this resource exists"
+          },
+          "id": {
+            "type": "string",
+            "description": "The randomly-generated id of a Resource"
+          },
+          "ref_id": {
+            "type": "string",
+            "description": "The locally-unique user-specified id of a Resource"
+          }
+        },
+        "description": "Describes an Integrations Server resource belonging to a Deployment"
+      },
+      "MetadataItem": {
+        "required": [
+          "key",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "The metadata value"
+          },
+          "key": {
+            "type": "string",
+            "description": "The metadata field name"
+          }
+        },
+        "description": "The key-value pair."
+      },
+      "DeploymentMetricsSettings": {
+        "required": [
+          "destination"
+        ],
+        "type": "object",
+        "properties": {
+          "destination": {
+            "description": "The destination deployment that this deployment's metrics will be sent to",
+            "$ref": "#/components/schemas/ObservabilityAbsoluteDeployment"
+          }
+        },
+        "description": "The metrics settings for a deployment"
+      },
+      "DeploymentLoggingSettings": {
+        "required": [
+          "destination"
+        ],
+        "type": "object",
+        "properties": {
+          "destination": {
+            "description": "The destination deployment that this deployment's logs will be sent to",
+            "$ref": "#/components/schemas/ObservabilityAbsoluteDeployment"
+          }
+        },
+        "description": "The logging settings for a deployment"
+      },
+      "ObservabilityAbsoluteDeployment": {
+        "required": [
+          "deployment_id"
+        ],
+        "type": "object",
+        "properties": {
+          "deployment_id": {
+            "type": "string",
+            "description": "The deployment to send logs and/or metrics to. Contains either the deployment's ID or 'self'."
+          },
+          "ref_id": {
+            "type": "string",
+            "description": "RefId of the Elasticsearch cluster to send logs and/or metrics to. If not specified, refId is resolved automatically as long as the destination deployment contains a single Elasticsearch resource."
+          }
+        },
+        "description": "The destination to send logs and metrics to"
+      }
+    },
+    "examples": {
+      "SearchRefDataRequestExample": {
+        "value": {
+          "LOV": {
+            "Type": "IMPACT_CONTEXT",
+            "TypeID": "8"
+          }
+        }
+      },
+      "SearchRefDataResponseExample": {
+        "value": {
+          "LOVs": {
+            "LOV": [
+              {
+                "Type": "IMPACTCONTEXT",
+                "TypeID": "8",
+                "IsMapping": "FALSE",
+                "Status": "Active",
+                "LOVs": {
+                  "LOV": [
+                    {
+                      "ID": "4",
+                      "Type": "PROCESS",
+                      "TypeID": "5",
+                      "Name": "Pedido de configuração",
+                      "Value": "Pedido de configuração",
+                      "Status": "Active"
+                    },
+                    {
+                      "ID": "20",
+                      "Type": "PRODUCTTYPE",
+                      "TypeID": "20",
+                      "Name": "Televisão",
+                      "Value": "Televisão",
+                      "Status": "Active"
+                    },
+                    {
+                      "ID": "32",
+                      "Type": "ACCESSTECHNOLOGY",
+                      "TypeID": "21",
+                      "Name": "FTTH NOS",
+                      "Value": "FTTH NOS",
+                      "Status": "Active"
+                    },
+                    {
+                      "ID": "36",
+                      "Type": "SERVICETECHNOLOGY",
+                      "TypeID": "22",
+                      "Name": "Nagra",
+                      "Value": "Nagra",
+                      "Status": "Active"
+                    }
+                  ]
+                },
+                "Parameters": {
+                  "Parameter": [
+                    {
+                      "Name": "Dados de referência",
+                      "Value": "Sim",
+                      "Type": "DADOS_REFERENCIA"
+                    },
+                    {
+                      "Name": "Parâmetro teste_5",
+                      "Value": "Talvez",
+                      "Type": "PARAM_T"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "GetRefDataResponseExample": {
+        "value": {
+          "LOVs": {
+            "Count": "1",
+            "LOV": [
+              {
+                "Description": "Number of months that the contact is considered updated",
+                "ID": "214011",
+                "Name": "CONTACTS_OUTDATE_THRESHOLD",
+                "Status": "Active",
+                "TypeID": "421",
+                "Value": "6",
+                "Application": {
+                  "ApplicationID": "1",
+                  "Name": "Master"
+                },
+                "Parameters": {}
+              }
+            ]
+          }
+        }
+      },
+      "SearchLOVBillingRequestExample": {
+        "value": {
+          "LOV": {
+            "Type": "BILLING_REASONS"
+          },
+          "Parameters": {
+            "Parameter": [
+              {
+                "Name": "REASONTYPE",
+                "Value": "PAPREASONS"
+              }
+            ]
+          }
+        }
+      },
+      "SearchLOVBillingResponseExample": {
+        "value": {
+          "LOVS": {
+            "LOVs": [
+              {
+                "ID": "1",
+                "LOV": [
+                  {
+                    "Name": "REASON_ID",
+                    "Value": "21"
+                  },
+                  {
+                    "Name": "DESCRIPTION",
+                    "Value": "FALTA DE CONFIANÇA: Teve problemas de faturação no passado"
+                  }
+                ]
+              },
+              {
+                "ID": "2",
+                "LOV": [
+                  {
+                    "Name": "REASON_ID",
+                    "Value": "18"
+                  },
+                  {
+                    "Name": "DESCRIPTION",
+                    "Value": "ORGANIZAÇÃO PESSOAL: Quer ter a fatura em papel, para organizar / controlar / arquivar"
+                  }
+                ]
+              },
+              {
+                "ID": "3",
+                "LOV": [
+                  {
+                    "Name": "REASON_ID",
+                    "Value": "19"
+                  },
+                  {
+                    "Name": "DESCRIPTION",
+                    "Value": "FACILIDADE PAGAMENTO: A fatura em papel facilita o pagamento / Não esquecer de pagar"
+                  }
+                ]
+              },
+              {
+                "ID": "4",
+                "LOV": [
+                  {
+                    "Name": "REASON_ID",
+                    "Value": "20"
+                  },
+                  {
+                    "Name": "DESCRIPTION",
+                    "Value": "NÃO É DIGITAL: Não tem email / Não usa internet"
+                  }
+                ]
+              },
+              {
+                "ID": "5",
+                "LOV": [
+                  {
+                    "Name": "REASON_ID",
+                    "Value": "22"
+                  },
+                  {
+                    "Name": "DESCRIPTION",
+                    "Value": "QUER OFERTA: Não deram vantagens / Esperava algo em troca"
+                  }
+                ]
+              },
+              {
+                "ID": "6",
+                "LOV": [
+                  {
+                    "Name": "REASON_ID",
+                    "Value": "23"
+                  },
+                  {
+                    "Name": "DESCRIPTION",
+                    "Value": "CONTABILIDADE: Necessita que seja em papel para efeitos contabilísticos"
+                  }
+                ]
+              },
+              {
+                "ID": "7",
+                "LOV": [
+                  {
+                    "Name": "REASON_ID",
+                    "Value": "23"
+                  },
+                  {
+                    "Name": "DESCRIPTION",
+                    "Value": "NÃO SABE/NÃO RESPONDE/OUTRO"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "HTTP-Client-Error-Response-500-internal": {
+        "value": {
+          "Status": {
+            "Code": "500",
+            "Message": "Internal Error."
+          }
+        }
+      },
+      "HTTP-Client-Error-Response-500-access": {
+        "value": {
+          "Status": {
+            "Code": "500",
+            "Message": "Internal Access Error."
+          }
+        }
+      },
+      "HTTP-Client-Error-Response-502-technical": {
+        "value": {
+          "Status": {
+            "Code": "502",
+            "Message": "Technical Error."
+          }
+        }
+      },
+      "HTTP-Client-Error-Response-502-functional": {
+        "value": {
+          "Status": {
+            "Code": "502",
+            "Message": "Functional Error.",
+            "FunctionalStatus": [
+              {
+                "Message": "Error Message",
+                "Code": "Error Code"
+              }
+            ]
+          }
+        }
+      },
+      "HTTP-Client-Error-Response-502-communication": {
+        "value": {
+          "Status": {
+            "Code": "502",
+            "Message": "Communication Error."
+          }
+        }
+      }
+    }
+  }
+}
